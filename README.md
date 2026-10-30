@@ -86,7 +86,7 @@ CMake options:
 |---|---|---|
 | `SENTRYWORK_DISABLE` | `OFF` | Build with no DSN compiled in, for forks and local builds that shouldn't report to your project. |
 | `SENTRYWORK_DEBUG_INFO` | `ON` | Line tables and a `.pdb` for every configuration. |
-| `SENTRYWORK_BACKEND` | `native` | `breakpad` or `inproc` send from inside the game instead, with no `sentry-crash` to ship. (Crashpad, Sentry's usual backend, doesn't build with clang++ on Windows.) |
+| `SENTRYWORK_BACKEND` | `native` | `breakpad` or `inproc` send from inside the game instead, with no `sentry-crash` to ship. (Crashpad, Sentry's usual backend, doesn't build with clang++ on Windows, so it is left out of `sentry-native/`.) |
 
 ## Notes
 

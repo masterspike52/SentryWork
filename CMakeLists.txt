@@ -13,7 +13,8 @@
 # library with its "native" backend: a crash is written up and sent by the
 # sentry-crash helper process, copied next to the executable here. (Crashpad,
 # Sentry's default, needs MSVC's compiler driver on Windows; ReXGlue projects
-# build with clang++.) On Linux it sends over libcurl: install
+# build with clang++, so sentry-native/ is vendored without it.) On Linux it
+# sends over libcurl: install
 # libcurl4-openssl-dev to build.
 #
 # SentryWork's own sources compile straight into the game executable, as the
@@ -60,6 +61,10 @@ function(sentrywork_attach target)
     set(arg_ENVIRONMENT "$<IF:$<CONFIG:Debug>,development,production>")
   endif()
 
+  if(NOT SENTRYWORK_BACKEND MATCHES "^(native|breakpad|inproc)$")
+    message(FATAL_ERROR "SENTRYWORK_BACKEND must be native, breakpad or inproc "
+                        "(crashpad is not vendored), not '${SENTRYWORK_BACKEND}'")
+  endif()
   if(NOT TARGET sentry)
     # option() and the SDK's guarded cache entries take these as given.
     set(SENTRY_BACKEND ${SENTRYWORK_BACKEND})
